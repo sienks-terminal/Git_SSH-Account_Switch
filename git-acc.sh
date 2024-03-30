@@ -73,7 +73,8 @@ function git-acc(){
   }
 
   local ssh_key_locate="$HOME/.ssh/id_"  # "./id_rsa_"
-  local gitacc_locate="$HOME/.gitacc" # "./.gitacc"
+  local gitacc_locate="${XDG_DATA_HOME:-$HOME}/.gitacc" # "./.gitacc"
+
   local ssh_keygen_type="rsa"
   local GIT_ACC_ARG=()
   local GIT_ACC=()    # git account to 
@@ -226,7 +227,7 @@ function git-acc(){
 
 local function _git-acc(){
   local function _acc(){
-    local users_info=$(cat $HOME/.gitacc | grep -n '\[.*\]')
+    local users_info=$(cat ${XDG_DATA_HOME:-$HOME}/.gitacc | grep -n '\[.*\]')
     local accs_line=$(echo $users_info | cut -f1 -d ':')
     local accnames=$(echo $users_info | cut -d '[' -f2 | cut -d ']' -f1)
     echo "${accnames[*]}" | tr ' ' '\n'
